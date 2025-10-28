@@ -13,13 +13,14 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
+public function run(): void
     {
-        // User::factory(10)->create();
+        // สร้าง User จำลอง (ถ้าต้องการ)
+        User::factory(10)->create(); 
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // 👇 สั่ง call Seeder ของเรา
+        $this->call([
+            ProductSeeder::class,
         ]);
     }
 }
