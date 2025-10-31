@@ -47,6 +47,14 @@
                    class="text-sm font-medium text-slate-900 underline decoration-2 underline-offset-4">
                   รายละเอียด
                 </a>
+                <form action="{{ route('cart.add', $p->product_id) }}" method="POST">
+                    @csrf
+                    <button type="submit" 
+                        class="mt-2 bg-slate-900 text-white px-4 py-2 rounded-full hover:bg-slate-700">
+                        เพิ่มลงตะกร้า
+                    </button>
+                </form>
+
               </div>
             </div>
           </div>

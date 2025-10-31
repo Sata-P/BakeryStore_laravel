@@ -71,7 +71,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-gray-900">
                                             <div class="flex items-center">
-                                                <form action="{{ route('cart.update', $item->id) }}" method="POST"
+                                                <form action="{{ route('cart.update', ['cartItem' => $item->cart_item_id]) }}" method="POST">
                                                     class="m-0">
                                                     @csrf
                                                     @method('PATCH')
@@ -85,7 +85,8 @@
                                                 </form>
                                                 <span
                                                     class="px-4 py-1 bg-white border-t border-b border-gray-200">{{ $item->quantity }}</span>
-                                                <form action="{{ route('cart.update', $item->id) }}" method="POST"
+                                                <form action="{{ route('cart.update', ['cartItem' => $item->cart_item_id]) }}" method="POST">
+
                                                     class="m-0">
                                                     @csrf
                                                     @method('PATCH')
@@ -104,7 +105,8 @@
                                             ${{ number_format($itemTotal, 2) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <form action="{{ route('cart.remove', $item->id) }}" method="POST"
+                                            <form action="{{ route('cart.remove', ['cartItem' => $item->cart_item_id]) }}" method="POST">
+ 
                                                 class="m-0">
                                                 @csrf
                                                 @method('DELETE')

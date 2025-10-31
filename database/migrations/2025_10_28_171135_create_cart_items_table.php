@@ -15,18 +15,19 @@ return new class extends Migration
     {
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id('cart_item_id');
-            $table->unsignedBigInteger('cart_id')->nullable(); // ยังไม่ใช้ FK ไปตะกร้าโดยตรง
-            $table->unsignedBigInteger('prod_id');             // ใช้ชื่อเดียวกับที่ Product อ้าง
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ✅ เพิ่มตรงนี้
+            $table->unsignedBigInteger('cart_id')->nullable();
+            $table->unsignedBigInteger('prod_id');
             $table->integer('quantity')->default(1);
             $table->decimal('unit_price', 10, 2)->default(0);
             $table->timestamps();
 
-            // Foreign Key ชี้ product_id ใน products
             $table->foreign('prod_id')
-                  ->references('product_id')
-                  ->on('products')
-                  ->cascadeOnDelete();
+                ->references('product_id')
+                ->on('products')
+                ->cascadeOnDelete();
         });
+
     }
 
     /**

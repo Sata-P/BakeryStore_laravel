@@ -51,6 +51,9 @@
 
     <main class="min-h-screen">
         @yield('content')
+        @isset($slot)
+            {{ $slot }}
+        @endisset
     </main>
 
     <footer class="border-t mt-20">
