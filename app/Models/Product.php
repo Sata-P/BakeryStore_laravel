@@ -6,16 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory; // 👈 2. เพิ่มบรรทัดนี้
+    protected $primaryKey = 'product_id';
+    protected $fillable = ['category_id','name','description','image_url','price','stock_qty'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [ // (อย่าลืม $fillable ที่เราคุยกันไว้ด้วยนะครับ)
-        'name',
-        'description',
-        'price',
-    ];
+    public function reviews()  { return $this->hasMany(Review::class, 'prod_id'); }
+    public function category() { return $this->belongsTo(Category::class, 'category_id'); }
+
+    public function scopeSearch($q, $term)
+    {
+        if (!$term) return;
+        $q->where(fn($x)=>$x->where('name','like',"%$term%")
+                            ->orWhere('description','like',"%$term%"));
+    }
+
+    public function avgRating()
+    {
+        return $this->reviews()->avg('rating') ?? 0;
+    }
 }
