@@ -20,13 +20,7 @@
 
     <main>
         @yield('content')
-
-        {{-- ตรวจว่ามี $slot ก่อนค่อยแสดง --}}
-        @isset($slot)
-            {{ $slot }}
-        @endisset
     </main>
-
 
 </body>
 </html>
