@@ -45,7 +45,7 @@
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
 
-        <! -- phone no -->
+        <!-- phone no -->
             <div class="mt-4">
                 <x-input-label for="phone_no" :value="__('Phone No')" />
                 <x-text-input id="phone_no" class="block mt-1 w-full" type="text" name="phone_no"
@@ -55,19 +55,22 @@
 
             <div class="flex items-center justify-end mt-4">
 
-                 <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    href="{{ url('/') }}">
+                <a href="{{ url('/') }}" 
+                class="underline text-sm text-[#5C4033] hover:text-[#2F1B0C] transition font-medium">
                     {{ __('Home?') }}
                 </a>
 
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 ms-4"
-                    href="{{ route('login') }}">
+                <a href="{{ route('login') }}" 
+                class="underline text-sm text-[#5C4033] hover:text-[#2F1B0C] transition font-medium ms-4">
                     {{ __('Already registered?') }}
                 </a>
 
-                <x-primary-button class="ms-4">
+
+
+                <x-primary-button class="ms-4 bg-[#5C4033] hover:bg-[#4B2E05] text-[#E3CAA5] font-semibold shadow-md transition">
                     {{ __('Register') }}
                 </x-primary-button>
+
 
 
             </div>
