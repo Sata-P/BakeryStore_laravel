@@ -1,54 +1,64 @@
-<x-guest-layout>
+@extends('layouts.app')
+
+@section('content')
+<div class="w-full max-w-md mx-auto bg-white shadow-card rounded-2xl p-8 mt-10">
+    <h2 class="text-2xl font-bold text-center mb-6 text-cocoa-900">เข้าสู่ระบบ</h2>
+
     <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    @if (session('status'))
+        <div class="mb-4 text-green-600 text-center font-medium">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
         <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-slate-700">อีเมล</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+                autocomplete="username"
+                class="w-full mt-1 rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cocoa-900">
+            @error('email')
+                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-slate-700">รหัสผ่าน</label>
+            <input id="password" type="password" name="password" required autocomplete="current-password"
+                class="w-full mt-1 rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cocoa-900">
+            @error('password')
+                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox"
-                    class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
-                    name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
+        <div class="flex items-center mb-4">
+            <input id="remember_me" type="checkbox" name="remember"
+                class="rounded border-gray-300 text-cocoa-900 shadow-sm focus:ring-cocoa-900">
+            <label for="remember_me" class="ms-2 text-sm text-gray-700">จดจำฉันไว้</label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <!-- Buttons -->
+        <div class="flex items-center justify-between">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                <a href="{{ route('password.request') }}" class="text-sm text-cocoa-900 hover:underline">
+                    ลืมรหัสผ่าน?
                 </a>
             @endif
 
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 ms-4"
-                    href="{{ url('/register') }}">
-                    {{ __('Register?') }}
-                </a>
+            <a href="{{ route('register') }}" class="text-sm text-cocoa-900 hover:underline">
+                สมัครสมาชิก
+            </a>
 
-            <button type="submit" class="ms-3 inline-flex items-center px-4 py-2 bg-slate-800 border ...">
-                Log in
+            <button type="submit"
+                class="bg-cocoa-900 text-white px-6 py-2 rounded-lg hover:bg-cocoa-800 shadow-soft">
+                เข้าสู่ระบบ
             </button>
         </div>
     </form>
-</x-guest-layout>
+</div>
+@endsection

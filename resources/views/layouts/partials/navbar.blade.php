@@ -19,15 +19,44 @@
     
 
     <div class="flex items-center gap-2">
-        <a href="{{ url('/cartpage') }}" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600"> <img src="{{ asset('imgs/cart.jpg') }}" alt="Cart" class="h-6 w-6"> </a>
+      {{-- 🛒 ปุ่ม Cart --}}
+      <a href="{{ url('/cartpage') }}" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600">
+        <img src="{{ asset('imgs/cart.jpg') }}" alt="Cart" class="h-6 w-6">
+      </a>
+
+      {{-- 🔐 เงื่อนไขเมื่อเข้าสู่ระบบ --}}
       @auth
-        <a href="{{ url('/dashboard') }}" class="px-3 py-2 rounded-full hover:bg-slate-100">Dashboard</a>
+          {{-- ปุ่ม Profile --}}
+          <a href="{{ route('profile.edit') }}" 
+            class="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-slate-100">
+              <img src="{{ asset('imgs/user-icon.png') }}" alt="User" class="w-6 h-6 rounded-full">
+              <span class="font-medium text-cocoa-900">{{ Auth::user()->name }}</span>
+          </a>
+
+          {{-- Dashboard --}}
+          <a href="{{ url('/dashboard') }}" class="px-3 py-2 rounded-full hover:bg-slate-100">
+            Dashboard
+          </a>
+
+          {{-- Logout --}}
+          <form method="POST" action="{{ route('logout') }}" class="inline">
+              @csrf
+              <button type="submit"
+                class="px-4 py-2 rounded-full bg-slate-900 text-white shadow-soft hover:bg-gray-700">
+                Logout
+              </button>
+          </form>
       @else
-        <a href="{{ url('/register') }}" class="px-3 py-2 rounded-full hover:bg-slate-100">Register</a>
-        <a href="{{ url('/login') }}" class="px-4 py-2 rounded-full bg-slate-900 text-white shadow-soft hover:bg-gray-700">
-          Login
-        </a>
+          {{-- 🧁 ยังไม่ login --}}
+          <a href="{{ url('/register') }}" class="px-3 py-2 rounded-full hover:bg-slate-100">
+            Register
+          </a>
+          <a href="{{ url('/login') }}" class="px-4 py-2 rounded-full bg-slate-900 text-white shadow-soft hover:bg-gray-700">
+            Login
+          </a>
       @endauth
+
     </div>
+
   </nav>
 </header>
