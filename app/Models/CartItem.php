@@ -15,17 +15,21 @@ class CartItem extends Model
      *
      * @var array<int, string>
      */
+    protected $primaryKey = 'cart_item_id'; // ✅ เพิ่มบรรทัดนี้
+
     protected $fillable = [
         'user_id',    // 👈 ต้องมีบรรทัดนี้
-        'product_id',
+        'prod_id',
         'quantity',
+        'unit_price'
     ];
 
     // ... (โค้ด relationships) ...
-    public function product(): BelongsTo
+    public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'prod_id', 'product_id');
     }
+
 
     public function user(): BelongsTo
     {

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\CartItem;
 use App\Models\Coupon; // 👈 เพิ่ม use ที่ด้านบนไฟล์
 use Carbon\Carbon;     // 👈 เพิ่ม use ที่ด้านบนไฟล์
+use App\Models\Product;   // ✅ ต้องมี
+
 
 class CartController extends Controller
 {
@@ -122,5 +124,29 @@ class CartController extends Controller
     {
         session()->forget('coupon');
         return redirect()->route('cartpage.index')->with('success', 'ลบ Coupon ออกแล้ว');
+    }
+
+    public function addToCart($id)
+    {
+        $product = Product::findOrFail($id);
+
+        // ถ้ามีสินค้าอยู่ในตะกร้าแล้ว → เพิ่มจำนวน
+        $cartItem = CartItem::where('user_id', Auth::id())
+            ->where('prod_id', $product->product_id)
+            ->first();
+
+        if ($cartItem) {
+            $cartItem->quantity += 1;
+            $cartItem->save();
+        } else {
+            CartItem::create([
+                'user_id' => Auth::id(),
+                'prod_id' => $product->product_id,
+                'quantity' => 1,
+                'unit_price' => $product->price,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'เพิ่มสินค้าลงตะกร้าเรียบร้อยแล้ว!');
     }
 }

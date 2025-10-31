@@ -4,13 +4,19 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;   // ✅ <— เพิ่มบรรทัดนี้
 use App\Models\Product;
 
 class ProductSeeder extends Seeder
 {
     public function run(): void
     {
+        // ✅ ปิด foreign key checks ชั่วคราว
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         Product::truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;'); // ✅ เปิดกลับ
 
         $items = [
             [
