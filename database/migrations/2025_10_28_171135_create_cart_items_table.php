@@ -14,12 +14,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cart_items', function (Blueprint $table) {
-        $table->id();
-        $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-        $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
-        $table->integer('quantity')->default(1);
-        $table->timestamps();
-    });
+            $table->id('cart_item_id');
+            $table->unsignedBigInteger('cart_id')->nullable(); // ยังไม่ใช้ FK ไปตะกร้าโดยตรง
+            $table->unsignedBigInteger('prod_id');             // ใช้ชื่อเดียวกับที่ Product อ้าง
+            $table->integer('quantity')->default(1);
+            $table->decimal('unit_price', 10, 2)->default(0);
+            $table->timestamps();
+
+            // Foreign Key ชี้ product_id ใน products
+            $table->foreign('prod_id')
+                  ->references('product_id')
+                  ->on('products')
+                  ->cascadeOnDelete();
+        });
     }
 
     /**

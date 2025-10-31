@@ -8,8 +8,10 @@ use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     return view('homepage');
-});
+})->name('home');
 
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 Route::get('/cartpage', function () {
     return view('cartpage.index');
@@ -38,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/coupon/apply', [CartController::class, 'applyCoupon'])->name('coupon.apply');
     Route::post('/coupon/remove', [CartController::class, 'removeCoupon'])->name('coupon.remove');
+
+    Route::post('/products/{product}/reviews', [ProductController::class, 'storeReview'])->name('products.reviews.store');
 });
 
 
