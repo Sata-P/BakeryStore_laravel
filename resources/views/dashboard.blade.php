@@ -13,8 +13,8 @@
 
         <div class="flex flex-wrap justify-center gap-4">
             <a href="{{ url('/products') }}" 
-               class="px-6 py-3 bg-cocoa-900 text-white rounded-xl shadow-soft hover:bg-cocoa-800">
-               🛍️ ดูสินค้าทั้งหมด
+               class="px-6 py-3 bg-cream-100 text-cocoa-900 border border-cocoa-200 rounded-xl hover:bg-cream-200">
+               🛍️ ไปยังหน้าแสดงสินค้า
             </a>
             <a href="{{ url('/cartpage') }}" 
                class="px-6 py-3 bg-cream-100 text-cocoa-900 border border-cocoa-200 rounded-xl hover:bg-cream-200">
