@@ -29,7 +29,12 @@
           {{-- ปุ่ม Profile --}}
           <a href="{{ route('profile.edit') }}" 
             class="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-slate-100">
-              <img src="{{ asset('imgs/user-icon.png') }}" alt="User" class="w-6 h-6 rounded-full">
+              
+              {{-- ✅ FIX: เปลี่ยนจาก <img> เป็น SVG Icon รูปคน --}}
+              <svg class="w-6 h-6 rounded-full text-slate-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              </svg>
+              
               <span class="font-medium text-cocoa-900">{{ Auth::user()->name }}</span>
           </a>
 

@@ -46,6 +46,8 @@ class CheckoutController extends Controller
             $total = $subtotal - $discount;
         }
 
+        
+
         // 3. ส่งข้อมูลทั้งหมดไปที่ View
         return view('checkoutpage.index', [
             'cartItems' => $cartItems,
