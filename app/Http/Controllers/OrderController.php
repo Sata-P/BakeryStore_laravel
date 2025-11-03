@@ -20,8 +20,8 @@ class OrderController extends Controller
         // 2. ดึงข้อมูลจำเป็น
         $user = Auth::user();
         $cartItems = CartItem::with('product')
-                        ->where('user_id', $user->id)
-                        ->get();
+            ->where('user_id', $user->id)
+            ->get();
 
         // 3. (Validation) ถ้าตะกร้าว่าง ให้เด้งกลับ
         if ($cartItems->isEmpty()) {
@@ -52,16 +52,16 @@ class OrderController extends Controller
                 $discount = $coupon->value;
             }
             if ($discount > $subtotal) $discount = $subtotal;
-            
+
             $total = $subtotal - $discount;
             $couponId = $coupon->id;
         }
 
-        // 6. ⭐️⭐️ เริ่ม Transaction ⭐️⭐️
+
         try {
             DB::beginTransaction();
 
-            // 7. สร้าง Order (ใบเสร็จหลัก)
+
             $order = Order::create([
                 'user_id' => $user->id,
                 'coupon_id' => $couponId,
@@ -72,7 +72,7 @@ class OrderController extends Controller
                 'shipping_phone' => $request->phone_no,
             ]);
 
-            // 8. วนลูป สร้าง OrderItems
+
             foreach ($cartItems as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
@@ -80,22 +80,24 @@ class OrderController extends Controller
                     'quantity' => $item->quantity,
                     'unit_price' => $item->product->price,
                 ]);
+
+    
+                $product = $item->product; // ดึง Model Product ที่ถูกโหลดไว้แล้ว
+                $product->decrement('stock_qty', $item->quantity);
             }
 
-            // 9. ล้างตะกร้าสินค้า (Cart)
             CartItem::where('user_id', $user->id)->delete();
 
-            // 10. ล้างคูปองใน Session
+
             session()->forget('coupon');
 
-            // 11. ถ้าสำเร็จทั้งหมด
-            DB::commit();
-            
-            // 12. พาไปหน้า Success
-            return redirect()->route('order.success', $order->id)->with('success', 'สั่งซื้อสำเร็จ!');
 
+            DB::commit();
+
+
+            return redirect()->route('order.success', $order->id)->with('success', 'สั่งซื้อสำเร็จ!');
         } catch (\Exception $e) {
-            // 13. ถ้าระหว่างทางมีปัญหา ให้ย้อนกลับทั้งหมด
+
             DB::rollBack();
             return redirect()->route('checkoutpage.index')->with('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage());
         }
