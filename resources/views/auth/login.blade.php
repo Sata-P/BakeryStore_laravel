@@ -55,7 +55,7 @@
             </a>
 
             <button type="submit"
-                class="bg-cocoa-900 text-white px-6 py-2 rounded-lg hover:bg-cocoa-800 shadow-soft">
+                class="bg-blue-700 text-white px-6 py-2 rounded-lg hover:bg-blue-600 shadow-soft">
                 เข้าสู่ระบบ
             </button>
         </div>
